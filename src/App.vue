@@ -4,6 +4,8 @@ import Sidebar, { type NavTab } from './components/common/Sidebar.vue';
 import NotesView from './views/NotesView.vue';
 import StreaksView from './views/StreaksView.vue';
 import HabitsView from './views/HabitsView.vue';
+import ConfirmModal from './components/common/ConfirmModal.vue';
+import { Toaster } from 'vue-sonner';
 
 const activeTab = ref<NavTab>('notes');
 </script>
@@ -37,5 +39,9 @@ const activeTab = ref<NavTab>('notes');
         </KeepAlive>
       </Transition>
     </div>
+
+    <!-- Global In-App Dialogs and Notifications -->
+    <ConfirmModal />
+    <Toaster theme="dark" position="bottom-right" richColors />
   </div>
 </template>

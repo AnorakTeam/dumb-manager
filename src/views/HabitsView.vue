@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 import { Plus, CalendarCheck2, Sparkles } from 'lucide-vue-next';
 import dayjs from 'dayjs';
 import { useHabits } from '../composables/useHabits';
+import { useConfirm } from '../composables/useConfirm';
+import { toast } from 'vue-sonner';
 import HabitTrackerRow from '../components/habits/HabitTrackerRow.vue';
 import HabitCreateModal from '../components/habits/HabitCreateModal.vue';
 import HabitCalendarModal from '../components/habits/HabitCalendarModal.vue';
@@ -18,6 +20,8 @@ const {
   getMonthLogs,
   deleteHabit,
 } = useHabits();
+
+const { confirm } = useConfirm();
 
 const isCreateModalOpen = ref(false);
 
@@ -67,11 +71,22 @@ async function handleChangeMonth(payload: { habitId: string; year: number; month
 async function handleCreate(data: { title: string; dailyTarget: number; color: string }) {
   await createHabit(data.title, data.dailyTarget, data.color);
   isCreateModalOpen.value = false;
+  toast.success(`Hábito "${data.title}" creado`);
 }
 
 async function handleDelete(habitId: string) {
-  if (confirm('¿Eliminar este hábito y todos sus registros históricos?')) {
+  const habit = habits.value.find((h) => h.id === habitId);
+  const title = habit ? habit.title : 'este hábito';
+  const ok = await confirm({
+    title: '¿Eliminar hábito?',
+    message: `¿Estás seguro de eliminar el hábito "${title}"? Se borrarán de forma definitiva todos los registros diarios asociados a él.`,
+    confirmText: 'Eliminar hábito',
+    cancelText: 'Cancelar',
+    type: 'danger',
+  });
+  if (ok) {
     await deleteHabit(habitId);
+    toast.success('Hábito eliminado');
   }
 }
 </script>

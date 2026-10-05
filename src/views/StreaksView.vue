@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Plus, Flame, Sparkles } from 'lucide-vue-next';
+import { Plus, Flame } from 'lucide-vue-next';
 import { useStreaks } from '../composables/useStreaks';
+import { useConfirm } from '../composables/useConfirm';
+import { toast } from 'vue-sonner';
 import StreakCard from '../components/streaks/StreakCard.vue';
 import StreakCreateModal from '../components/streaks/StreakCreateModal.vue';
 import StreakResetModal from '../components/streaks/StreakResetModal.vue';
@@ -17,6 +19,8 @@ const {
   getStreakHistory,
   deleteStreak,
 } = useStreaks();
+
+const { confirm } = useConfirm();
 
 const isCreateModalOpen = ref(false);
 
@@ -34,6 +38,7 @@ onMounted(() => {
 async function handleCreate(title: string) {
   await createStreak(title);
   isCreateModalOpen.value = false;
+  toast.success(`Racha "${title}" iniciada`);
 }
 
 function handleOpenReset(streakId: string) {
@@ -46,9 +51,11 @@ function handleOpenReset(streakId: string) {
 
 async function handleConfirmReset(reason: string) {
   if (activeResetStreak.value) {
+    const title = activeResetStreak.value.title;
     await resetStreak(activeResetStreak.value.id, reason);
     isResetModalOpen.value = false;
     activeResetStreak.value = null;
+    toast.info(`Racha "${title}" reiniciada a 0 días`);
   }
 }
 
@@ -62,8 +69,18 @@ async function handleOpenHistory(streakId: string) {
 }
 
 async function handleDelete(streakId: string) {
-  if (confirm('¿Eliminar esta racha y todo su historial?')) {
+  const streak = streaks.value.find((s) => s.id === streakId);
+  const title = streak ? streak.title : 'esta racha';
+  const ok = await confirm({
+    title: '¿Eliminar racha?',
+    message: `¿Estás seguro de que deseas eliminar la racha "${title}"? Se borrará todo su historial acumulado de reinicios.`,
+    confirmText: 'Eliminar racha',
+    cancelText: 'Cancelar',
+    type: 'danger',
+  });
+  if (ok) {
     await deleteStreak(streakId);
+    toast.success('Racha eliminada');
   }
 }
 </script>
@@ -103,13 +120,13 @@ async function handleDelete(streakId: string) {
         </div>
         <h3 class="text-base font-semibold text-slate-200">No hay ninguna racha creada</h3>
         <p class="text-xs text-slate-400 mt-1 max-w-sm">
-          Crea contadores para seguir cuánto tiempo llevas sin comida rápida, sin fumar, o midiendo cualquier evento importante.
+          Crea contadores para seguir cuánto tiempo llevas sin comida rápida, o midiendo cualquier evento importante.
         </p>
         <button
           @click="isCreateModalOpen = true"
           class="mt-4 flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg shadow-sm transition-colors cursor-pointer"
         >
-          <Sparkles class="w-4 h-4" />
+          <Plus class="w-4 h-4" />
           <span>Crear Primer Contador</span>
         </button>
       </div>

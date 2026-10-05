@@ -2,6 +2,8 @@
 import { onMounted } from 'vue';
 import { Plus } from 'lucide-vue-next';
 import { useNotes } from '../composables/useNotes';
+import { useConfirm } from '../composables/useConfirm';
+import { toast } from 'vue-sonner';
 import NoteSidebar from '../components/notes/NoteSidebar.vue';
 import MarkdownEditor from '../components/notes/MarkdownEditor.vue';
 import type { Note, NoteInput } from '../types/note';
@@ -16,6 +18,8 @@ const {
   setActiveNote,
 } = useNotes();
 
+const { confirm } = useConfirm();
+
 onMounted(() => {
   fetchNotes();
 });
@@ -28,6 +32,7 @@ async function handleCreate() {
   });
   if (newNote) {
     setActiveNote(newNote);
+    toast.success('Nueva nota creada');
   }
 }
 
@@ -40,7 +45,21 @@ async function handleSave(input: NoteInput) {
 }
 
 async function handleDelete(id: string) {
-  await deleteNote(id);
+  const note = notes.value.find((n) => n.id === id);
+  const noteTitle = note?.title?.trim() || 'esta nota';
+  const ok = await confirm({
+    title: '¿Eliminar nota permanentemente?',
+    message: `¿Estás seguro de eliminar "${noteTitle}"? Esta acción borrará la nota de la base de datos local y no se puede deshacer.`,
+    confirmText: 'Eliminar',
+    cancelText: 'Cancelar',
+    type: 'danger',
+  });
+  if (ok) {
+    const success = await deleteNote(id);
+    if (success) {
+      toast.success('Nota eliminada');
+    }
+  }
 }
 </script>
 

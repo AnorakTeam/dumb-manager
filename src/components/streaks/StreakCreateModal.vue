@@ -18,7 +18,6 @@ const suggestions = [
   'Comida chatarra',
   'Comprar cosas innecesarias',
   'Redes sociales sin control',
-  'Fumar / Vapear',
   'Alcohol',
   'Dormir tarde',
   'Procrastinar',
@@ -51,7 +50,7 @@ function selectSuggestion(s: string) {
         <input
           v-model="title"
           type="text"
-          placeholder="ej. Comida rápida, Fumar, etc."
+          placeholder="ej. Comida rápida, no repetir x cosa, etc."
           class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/30 transition-all selectable"
           autofocus
           required

@@ -14,7 +14,8 @@
     "dompurify": "^3.4.16",
     "lucide-vue-next": "^1.0.0",
     "marked": "^18.0.14",
-    "vue": "^3.5.42"
+    "vue": "^3.5.42",
+    "vue-sonner": "^2.0.9"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
