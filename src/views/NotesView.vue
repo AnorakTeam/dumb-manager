@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { Plus, FileText } from 'lucide-vue-next';
+import { Plus } from 'lucide-vue-next';
 import { useNotes } from '../composables/useNotes';
 import NoteSidebar from '../components/notes/NoteSidebar.vue';
 import MarkdownEditor from '../components/notes/MarkdownEditor.vue';
@@ -69,8 +69,12 @@ async function handleDelete(id: string) {
         v-else
         class="flex-1 flex flex-col items-center justify-center p-8 text-center bg-slate-950 text-slate-400 select-none"
       >
-        <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 mb-4 shadow-inner">
-          <FileText class="w-8 h-8 text-sky-400/80" />
+        <div class="relative mb-4">
+          <img
+            src="/logo-avatar.png"
+            alt="dumb-manager"
+            class="w-20 h-20 rounded-2xl object-cover border border-slate-800 shadow-xl shadow-sky-500/10"
+          />
         </div>
         <h3 class="text-base font-semibold text-slate-200">No hay ninguna nota seleccionada</h3>
         <p class="text-xs text-slate-400 mt-1 max-w-sm">

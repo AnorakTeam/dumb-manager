@@ -102,8 +102,12 @@ async function handleDelete(habitId: string) {
     <!-- Main Content List -->
     <main class="flex-1 overflow-y-auto p-6">
       <div v-if="habits.length === 0 && !loading" class="h-full flex flex-col items-center justify-center text-center p-8 select-none">
-        <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 mb-4 shadow-inner">
-          <CalendarCheck2 class="w-8 h-8 text-sky-400/70" />
+        <div class="relative mb-4">
+          <img
+            src="/logo-avatar.png"
+            alt="dumb-manager"
+            class="w-20 h-20 rounded-2xl object-cover border border-slate-800 shadow-xl shadow-sky-500/10"
+          />
         </div>
         <h3 class="text-base font-semibold text-slate-200">No hay ningún hábito configurado</h3>
         <p class="text-xs text-slate-400 mt-1 max-w-sm">

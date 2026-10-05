@@ -10,7 +10,7 @@ name = "dumb_manager_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2.7.1" }
+tauri-build = { version = "2.7.1", features = [] }
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -20,5 +20,5 @@ uuid = { version = "1.8", features = ["v4"] }
 chrono = { version = "0.4", features = ["serde"] }
 dirs = "5.0"
 log = "0.4"
-tauri = { version = "2.12.1" }
+tauri = { version = "2.12.1", features = [] }
 tauri-plugin-log = "2"
