@@ -79,7 +79,6 @@ pub fn run() {
             commands::notes::get_notes,
             commands::notes::save_note,
             commands::notes::delete_note,
-            commands::notes::get_storage_path,
             // Streaks
             commands::streaks::get_streaks,
             commands::streaks::create_streak,

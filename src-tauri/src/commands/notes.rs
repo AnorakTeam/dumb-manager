@@ -113,9 +113,3 @@ pub fn delete_note(state: State<'_, AppState>, id: String) -> Result<(), String>
         .map_err(|e| e.to_string())?;
     Ok(())
 }
-
-#[tauri::command]
-pub fn get_storage_path() -> Result<String, String> {
-    let path = crate::db::resolve_db_path()?;
-    Ok(path.to_string_lossy().to_string())
-}
