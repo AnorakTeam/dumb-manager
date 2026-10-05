@@ -115,7 +115,7 @@ async function handleDelete(streakId: string) {
           <img
             src="/logo-avatar.png"
             alt="dumb-manager"
-            class="w-20 h-20 rounded-2xl object-cover border border-slate-800 shadow-xl shadow-amber-500/10"
+            class="w-60 h-60 rounded-2xl object-cover border border-slate-800 shadow-xl shadow-amber-500/10"
           />
         </div>
         <h3 class="text-base font-semibold text-slate-200">No hay ninguna racha creada</h3>

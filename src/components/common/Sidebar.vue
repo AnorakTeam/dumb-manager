@@ -24,14 +24,14 @@ const tabs: { id: NavTab; label: string; icon: any }[] = [
   >
     <!-- Brand / Header -->
     <div>
-      <div class="px-5 py-4 border-b border-slate-800/60 flex items-center gap-3">
+      <div class="px-5 py-4 border-b border-slate-800/60 flex flex-col items-center gap-3">
         <img
           src="/logo-avatar.png"
           alt="dumb-manager logo"
-          class="w-20 h-20 rounded-xl object-cover bg-slate-900 border border-slate-700/80 shadow-md shadow-sky-500/10"
+          class="w-22 h-22 rounded-xl object-cover bg-slate-900 border border-slate-700/80 shadow-md shadow-sky-500/10"
         />
         <div>
-          <h1 class="text-base font-bold tracking-tight text-white leading-none">dumb-manager</h1>
+          <h1 class="text-2xl font-bold tracking-tight text-white leading-none">dumb-manager</h1>
           <!-- <span class="text-[11px] text-slate-400 font-mono tracking-wider">LOCAL FIRST</span> -->
         </div>
       </div>

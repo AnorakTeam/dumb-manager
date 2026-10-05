@@ -121,7 +121,7 @@ async function handleDelete(habitId: string) {
           <img
             src="/logo-avatar.png"
             alt="dumb-manager"
-            class="w-20 h-20 rounded-2xl object-cover border border-slate-800 shadow-xl shadow-sky-500/10"
+            class="w-60 h-60 rounded-2xl object-cover border border-slate-800 shadow-xl shadow-sky-500/10"
           />
         </div>
         <h3 class="text-base font-semibold text-slate-200">No hay ningún hábito configurado</h3>
