@@ -4,7 +4,7 @@ import { Plus, CalendarCheck2, Sparkles } from 'lucide-vue-next';
 import dayjs from 'dayjs';
 import { useHabits } from '../composables/useHabits';
 import { useConfirm } from '../composables/useConfirm';
-import { toast } from 'vue-sonner';
+import { toast } from '../composables/useToast';
 import HabitTrackerRow from '../components/habits/HabitTrackerRow.vue';
 import HabitCreateModal from '../components/habits/HabitCreateModal.vue';
 import HabitCalendarModal from '../components/habits/HabitCalendarModal.vue';

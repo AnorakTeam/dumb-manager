@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { Plus, Flame } from 'lucide-vue-next';
 import { useStreaks } from '../composables/useStreaks';
 import { useConfirm } from '../composables/useConfirm';
-import { toast } from 'vue-sonner';
+import { toast } from '../composables/useToast';
 import StreakCard from '../components/streaks/StreakCard.vue';
 import StreakCreateModal from '../components/streaks/StreakCreateModal.vue';
 import StreakResetModal from '../components/streaks/StreakResetModal.vue';

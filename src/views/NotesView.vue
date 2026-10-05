@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { Plus } from 'lucide-vue-next';
 import { useNotes } from '../composables/useNotes';
 import { useConfirm } from '../composables/useConfirm';
-import { toast } from 'vue-sonner';
+import { toast } from '../composables/useToast';
 import NoteSidebar from '../components/notes/NoteSidebar.vue';
 import MarkdownEditor from '../components/notes/MarkdownEditor.vue';
 import type { Note, NoteInput } from '../types/note';

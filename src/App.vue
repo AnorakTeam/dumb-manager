@@ -5,7 +5,7 @@ import NotesView from './views/NotesView.vue';
 import StreaksView from './views/StreaksView.vue';
 import HabitsView from './views/HabitsView.vue';
 import ConfirmModal from './components/common/ConfirmModal.vue';
-import { Toaster } from 'vue-sonner';
+import ToastContainer from './components/common/ToastContainer.vue';
 
 const activeTab = ref<NavTab>('notes');
 </script>
@@ -42,6 +42,6 @@ const activeTab = ref<NavTab>('notes');
 
     <!-- Global In-App Dialogs and Notifications -->
     <ConfirmModal />
-    <Toaster theme="dark" position="bottom-right" richColors />
+    <ToastContainer />
   </div>
 </template>
