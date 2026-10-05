@@ -28,11 +28,11 @@ const tabs: { id: NavTab; label: string; icon: any }[] = [
         <img
           src="/logo-avatar.png"
           alt="dumb-manager logo"
-          class="w-9 h-9 rounded-xl object-cover bg-slate-900 border border-slate-700/80 shadow-md shadow-sky-500/10"
+          class="w-20 h-20 rounded-xl object-cover bg-slate-900 border border-slate-700/80 shadow-md shadow-sky-500/10"
         />
         <div>
-          <h1 class="text-sm font-bold tracking-tight text-white leading-none">dumb-manager</h1>
-          <span class="text-[11px] text-slate-400 font-mono tracking-wider">LOCAL FIRST</span>
+          <h1 class="text-base font-bold tracking-tight text-white leading-none">dumb-manager</h1>
+          <!-- <span class="text-[11px] text-slate-400 font-mono tracking-wider">LOCAL FIRST</span> -->
         </div>
       </div>
 

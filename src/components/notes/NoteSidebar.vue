@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { Plus, Search, Trash2, CheckSquare, FileText, X } from 'lucide-vue-next';
+import { Plus, Search, Trash2, FileText, X } from 'lucide-vue-next';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/es';
@@ -22,22 +22,15 @@ const emit = defineEmits<{
 }>();
 
 const searchQuery = ref('');
-const filterType = ref<'all' | 'checklists' | 'notes'>('all');
 
 const filteredNotes = computed(() => {
-  return props.notes.filter((note) => {
-    // Filter by type
-    if (filterType.value === 'checklists' && !note.is_checklist) return false;
-    if (filterType.value === 'notes' && note.is_checklist) return false;
-
-    // Search query
-    if (!searchQuery.value.trim()) return true;
-    const q = searchQuery.value.toLowerCase();
-    return (
+  if (!searchQuery.value.trim()) return props.notes;
+  const q = searchQuery.value.toLowerCase();
+  return props.notes.filter(
+    (note) =>
       note.title.toLowerCase().includes(q) ||
       note.content.toLowerCase().includes(q)
-    );
-  });
+  );
 });
 
 function formatTime(dateStr: string) {
@@ -96,37 +89,6 @@ function handleDelete(e: Event, id: string) {
           <X class="w-3.5 h-3.5" />
         </button>
       </div>
-
-      <!-- Filter tabs -->
-      <div class="flex gap-1 p-0.5 bg-slate-950/50 rounded-lg border border-slate-800/60 text-[11px]">
-        <button
-          @click="filterType = 'all'"
-          :class="[
-            'flex-1 py-1 rounded-md transition-colors text-center font-medium',
-            filterType === 'all' ? 'bg-slate-800 text-sky-400 shadow-xs' : 'text-slate-400 hover:text-slate-200',
-          ]"
-        >
-          Todas
-        </button>
-        <button
-          @click="filterType = 'checklists'"
-          :class="[
-            'flex-1 py-1 rounded-md transition-colors text-center font-medium',
-            filterType === 'checklists' ? 'bg-slate-800 text-sky-400 shadow-xs' : 'text-slate-400 hover:text-slate-200',
-          ]"
-        >
-          Checklists
-        </button>
-        <button
-          @click="filterType = 'notes'"
-          :class="[
-            'flex-1 py-1 rounded-md transition-colors text-center font-medium',
-            filterType === 'notes' ? 'bg-slate-800 text-sky-400 shadow-xs' : 'text-slate-400 hover:text-slate-200',
-          ]"
-        >
-          Texto
-        </button>
-      </div>
     </div>
 
     <!-- Notes list -->
@@ -152,13 +114,7 @@ function handleDelete(e: Event, id: string) {
       >
         <div class="flex items-start justify-between gap-2">
           <div class="flex items-center gap-1.5 min-w-0 flex-1">
-            <component
-              :is="note.is_checklist ? CheckSquare : FileText"
-              :class="[
-                'w-3.5 h-3.5 shrink-0',
-                note.is_checklist ? 'text-emerald-400' : 'text-sky-400',
-              ]"
-            />
+            <FileText class="w-3.5 h-3.5 shrink-0 text-sky-400" />
             <h4 class="text-xs font-semibold text-slate-100 truncate">
               {{ note.title || 'Sin título' }}
             </h4>
@@ -178,12 +134,6 @@ function handleDelete(e: Event, id: string) {
 
         <div class="flex items-center justify-between mt-2 pt-1.5 border-t border-slate-800/40 text-[10px] text-slate-400">
           <span>{{ formatTime(note.updated_at) }}</span>
-          <span
-            v-if="note.is_checklist"
-            class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[9px] border border-emerald-500/20"
-          >
-            CHECKLIST
-          </span>
         </div>
       </div>
     </div>
