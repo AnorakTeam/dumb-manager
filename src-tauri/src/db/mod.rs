@@ -4,7 +4,7 @@ use rusqlite::Connection;
 use std::fs;
 use std::path::PathBuf;
 
-pub fn init_db() -> Result<Connection, String> {
+pub fn resolve_db_path() -> Result<PathBuf, String> {
     let base_dir: PathBuf = match std::env::var("XDG_DATA_HOME") {
         Ok(val) if !val.trim().is_empty() => PathBuf::from(val),
         _ => match dirs::data_dir() {
@@ -20,7 +20,11 @@ pub fn init_db() -> Result<Connection, String> {
     fs::create_dir_all(&app_dir)
         .map_err(|e| format!("Failed to create data directory {:?}: {}", app_dir, e))?;
 
-    let db_path = app_dir.join("dumb.db");
+    Ok(app_dir.join("dumb.db"))
+}
+
+pub fn init_db() -> Result<Connection, String> {
+    let db_path = resolve_db_path()?;
     log::info!("Connecting to SQLite database at {:?}", db_path);
 
     let conn = Connection::open(&db_path)

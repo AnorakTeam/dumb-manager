@@ -16,7 +16,10 @@ import {
   Trash2,
   Undo2,
   Redo2,
+  Copy,
+  CheckCheck,
 } from 'lucide-vue-next';
+import { invoke } from '@tauri-apps/api/core';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import type { Note, NoteInput } from '../../types/note';
@@ -246,8 +249,34 @@ function handleGlobalKeyDown(e: KeyboardEvent) {
   }
 }
 
-onMounted(() => {
+const storagePath = ref<string>('');
+const isPathCopied = ref(false);
+
+async function copyStoragePath() {
+  const path = storagePath.value || '~/.local/share/dumb-manager/dumb.db';
+  try {
+    await navigator.clipboard.writeText(path);
+  } catch {
+    const textarea = document.createElement('textarea');
+    textarea.value = path;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
+  isPathCopied.value = true;
+  setTimeout(() => {
+    isPathCopied.value = false;
+  }, 2000);
+}
+
+onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown);
+  try {
+    storagePath.value = await invoke<string>('get_storage_path');
+  } catch (e) {
+    storagePath.value = '~/.local/share/dumb-manager/dumb.db';
+  }
 });
 
 onUnmounted(() => {
@@ -377,6 +406,17 @@ function insertLinePrefix(linePrefix: string) {
               <span>Guardando...</span>
             </template>
           </div>
+
+          <!-- Copy storage path button -->
+          <button
+            @click="copyStoragePath"
+            class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-[11px] transition-colors cursor-pointer select-none"
+            :class="isPathCopied ? 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10' : 'text-slate-400 hover:text-slate-200'"
+            :title="`Copiar ruta en el sistema (${storagePath || '~/.local/share/dumb-manager/dumb.db'})`"
+          >
+            <component :is="isPathCopied ? CheckCheck : Copy" class="w-3 h-3" />
+            <span>{{ isPathCopied ? '¡Ruta copiada!' : 'Copiar ruta' }}</span>
+          </button>
 
           <!-- View Mode Toggles -->
           <div class="flex items-center p-0.5 bg-slate-900 border border-slate-800 rounded-lg">
